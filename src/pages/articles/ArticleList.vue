@@ -23,7 +23,6 @@ import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
-const blockMap = ref(null);
 const articles = ref([]);
 const search = ref('');
 
@@ -38,22 +37,23 @@ const filteredArticles = computed(() => {
 });
 
 onMounted(async () => {
-  // get Notion blocks from the API via a Notion pageId
-  blockMap.value = await getPageBlocks('3fed88e8089b4c3ba6defa2b16127a91');
-  blockMap.value = Object.values(blockMap.value).slice(1);
+  const blockMap = await getPageBlocks('3fed88e8089b4c3ba6defa2b16127a91');
+  const blocks = Object.values(blockMap).slice(1);
 
-  for (const block of blockMap.value) {
-    const title = block.value.properties?.title[0][0];
+  blocks.forEach((block) => {
+    const title = block.value.properties?.title?.[0]?.[0];
     const id = block.value.id;
     const createdTime = new Date(block.value.created_time).toLocaleString();
     const pageCover = block.value.format?.page_cover;
 
-    articles.value.push({
-      id: id,
-      title: title,
-      createdTime: createdTime,
-      pageCover: pageCover,
-    });
-  }
+    if (title) {
+      articles.value.push({
+        id,
+        title,
+        createdTime,
+        pageCover,
+      });
+    }
+  });
 });
 </script>
