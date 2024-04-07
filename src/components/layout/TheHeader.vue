@@ -5,35 +5,19 @@
     scroll-threshold="50"
   >
     <template v-slot:prepend>
-      <router-link to="/">
-        <v-app-bar-nav-icon
-          ><svg-icon type="mdi" :path="mdiAlphaICircle"></svg-icon
-        ></v-app-bar-nav-icon>
-      </router-link>
+      <v-app-bar-nav-icon icon="mdi-alpha-i-circle" to="/"></v-app-bar-nav-icon>
     </template>
 
     <v-app-bar-title>Ian Cheng's Blog</v-app-bar-title>
 
     <template v-slot:append>
-      <v-btn icon>
-        <svg-icon
-          type="mdi"
-          :path="mdiThemeLightDark"
-          @click="toggleTheme"
-        ></svg-icon>
-      </v-btn>
-      <v-btn icon>
-        <a href="https://github.com/chengtc-dev">
-          <svg-icon type="mdi" :path="mdiGithub"></svg-icon>
-        </a>
-      </v-btn>
+      <v-btn icon="mdi-theme-light-dark" @click="toggleTheme"></v-btn>
+      <v-btn icon="mdi-github" href="https://github.com/chengtc-dev"></v-btn>
     </template>
   </v-app-bar>
 </template>
 
 <script setup>
-import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiAlphaICircle, mdiThemeLightDark, mdiGithub } from '@mdi/js';
 import { useTheme } from 'vuetify';
 
 const theme = useTheme();

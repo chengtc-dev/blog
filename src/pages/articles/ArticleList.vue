@@ -17,6 +17,8 @@
     v-model="currentPage"
     :length="totalPages"
     @input="paginateArticles"
+    next-icon="mdi-menu-right"
+    prev-icon="mdi-menu-left"
   ></v-pagination>
 </template>
 
