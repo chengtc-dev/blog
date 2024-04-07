@@ -8,11 +8,16 @@
   </v-container>
   <v-container>
     <v-row align="center" justify="center">
-      <v-col v-for="article in filteredArticles" :key="article.id" cols="auto">
+      <v-col v-for="article in paginatedArticles" :key="article.id" cols="auto">
         <base-card :article="article" @click="checkOut(article)"></base-card>
       </v-col>
     </v-row>
   </v-container>
+  <v-pagination
+    v-model="currentPage"
+    :length="totalPages"
+    @input="paginateArticles"
+  ></v-pagination>
 </template>
 
 <script setup>
@@ -25,15 +30,31 @@ const router = useRouter();
 const route = useRoute();
 const articles = ref([]);
 const search = ref('');
+const currentPage = ref(1);
+const pageSize = 6;
 
 const checkOut = (article) => {
   router.push({ path: `${route.path}/${article.id}` });
 };
 
+const paginateArticles = (page) => {
+  currentPage.value = page;
+};
+
+const paginatedArticles = computed(() => {
+  const startIndex = (currentPage.value - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  return filteredArticles.value.slice(startIndex, endIndex);
+});
+
 const filteredArticles = computed(() => {
   return articles.value.filter((article) =>
     article.title.toLowerCase().includes(search.value.toLowerCase())
   );
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredArticles.value.length / pageSize);
 });
 
 onMounted(async () => {
