@@ -64,7 +64,10 @@ onMounted(async () => {
   const blocks = Object.values(blockMap).slice(1);
 
   blocks.forEach((block) => {
-    const title = block.value.properties?.title?.[0]?.[0];
+    console.log(block);
+    const title = block.value.properties?.title
+      ?.map((item) => item[0])
+      .join('');
     const id = block.value.id;
     const createdTime = new Date(block.value.created_time).toLocaleString();
     const pageCover = block.value.format?.page_cover;
