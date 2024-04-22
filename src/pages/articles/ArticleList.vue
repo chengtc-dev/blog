@@ -44,10 +44,10 @@ const router = useRouter();
 const route = useRoute();
 const articles = ref([]);
 const tags = ref([]);
+const selectedTags = ref([]);
 const search = ref('');
 const currentPage = ref(1);
-const selectedTags = ref([]);
-const pageSize = 6;
+const pageSize = ref(10);
 
 const checkOut = (article) => {
   router.push({ path: `${route.path}/${article.id}` });
@@ -66,9 +66,19 @@ const toggleTag = (tag) => {
   }
 };
 
+const updatePageSize = () => {
+  if (window.innerWidth <= 768) {
+    pageSize.value = 4;
+  } else if (768 < window.innerWidth && window.innerWidth <= 1600) {
+    pageSize.value = 6;
+  } else if (1600 < window.innerWidth) {
+    pageSize.value = 10;
+  }
+};
+
 const paginatedArticles = computed(() => {
-  const startIndex = (currentPage.value - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
+  const startIndex = (currentPage.value - 1) * pageSize.value;
+  const endIndex = startIndex + pageSize.value;
   return filteredArticles.value.slice(startIndex, endIndex);
 });
 
@@ -87,7 +97,7 @@ const filteredArticles = computed(() => {
 });
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredArticles.value.length / pageSize);
+  return Math.ceil(filteredArticles.value.length / pageSize.value);
 });
 
 onMounted(async () => {
@@ -118,5 +128,9 @@ onMounted(async () => {
       });
     }
   });
+
+  updatePageSize();
 });
+
+window.addEventListener('resize', updatePageSize);
 </script>
