@@ -5,7 +5,7 @@ The place where I record my learning journey in programming development.
 
 ## Tech Stack
 
-**Client:** Vue, Vue Router, Vuetify, Vue Notion
+**Client:** Vue, Vue Router, Vuetify, Vue Notion, Vite
 
 **Server:** Notion
 
