@@ -1,5 +1,8 @@
 <template>
   <NotionRenderer :blockMap="blockMap" fullPage />
+  <button @click="scrollToTop" class="scroll-to-top">
+    <v-icon>mdi-arrow-up</v-icon>
+  </button>
 </template>
 
 <script setup>
@@ -14,8 +17,29 @@ onMounted(async () => {
   // get Notion blocks from the API via a Notion pageId
   blockMap.value = await getPageBlocks(route.params.id);
 });
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 </script>
 
 <style>
 @import 'vue-notion/src/styles.css';
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 100%;
+  padding: 10px 20px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.scroll-to-top:hover {
+  background-color: #0056b3;
+}
 </style>
