@@ -1,5 +1,11 @@
 <template>
   <NotionRenderer :blockMap="blockMap" fullPage />
+  <v-container>
+    <section class="comments" aria-labelledby="comment">
+      <h2 id="comment">Comments</h2>
+      <Disqus shortname="chengtc-dev" />
+    </section>
+  </v-container>
   <button @click="scrollToTop" class="scroll-to-top">
     <v-icon>mdi-arrow-up</v-icon>
   </button>
@@ -9,6 +15,7 @@
 import { ref, onMounted } from 'vue';
 import { NotionRenderer, getPageBlocks } from 'vue-notion';
 import { useRoute } from 'vue-router';
+import { Disqus } from 'vue-disqus';
 
 const route = useRoute();
 const blockMap = ref(null);
