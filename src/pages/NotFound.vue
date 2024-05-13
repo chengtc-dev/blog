@@ -1,8 +1,10 @@
 <template>
-  <v-container fluid class="fill-height">
-    <v-main class="d-flex flex-column align-center justify-center">
-      <h1 class="text-red">404</h1>
-      <h2>Page Not Found</h2>
-    </v-main>
+  <v-container>
+    <v-empty-state
+      headline="Whoops, 404"
+      title="Page not found"
+      text="The page you were looking for does not exist"
+      image="/alpha-i-circle.svg"
+    ></v-empty-state>
   </v-container>
 </template>
